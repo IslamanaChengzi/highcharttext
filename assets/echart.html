@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div class="container-fluid">
+    <div id="main"  class="col-md-6 col-sm-6 col-xs-6 " style="height:300px"></div>
+    <div id="main1"  class="col-md-6 col-sm-6 col-xs-6 " style="height:300px"></div>
+</div>
+
+
+
+
+<!--  <div id="main1" style="height:400px;display: inline;"></div> -->
+<!-- ECharts单文件引入 -->
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/gauge' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+                var myChart1 = ec.init(document.getElementById('main1'));
+                option = {
+                    tooltip : {
+                        formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: false},
+                            restore : {show: false},
+                            saveAsImage : {show: false}
+                        }
+                    },
+                    series : [
+                        {
+                            name:'业务指标',
+                            type:'gauge',
+                            splitNumber: 10,       // 分割段数，默认为5
+                            axisLine: {            // 坐标轴线
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: [[0.2, '#228b22'],[0.8, '#48b'],[1, '#ff4500']],
+                                    width: 8
+                                }
+                            },
+                            axisTick: {            // 坐标轴小标记
+                                splitNumber: 10,   // 每份split细分多少段
+                                length :12,        // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: 'auto'
+                                }
+                            },
+                            axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: 'auto'
+                                }
+                            },
+                            splitLine: {           // 分隔线
+                                show: true,        // 默认显示，属性show控制显示与否
+                                length :30,         // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                    color: 'auto'
+                                }
+                            },
+                            pointer : {
+                                width : 5
+                            },
+                            title : {
+                                show : true,
+                                offsetCenter: [0, '-110%'],       // x, y，单位px
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    fontWeight: 'bolder'
+                                }
+                            },
+                            detail : {
+                                formatter:'{value}%',
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: 'auto',
+                                    fontWeight: 'bolder'
+                                }
+                            },
+                            data:[{value: 50, name: '完成率'}]
+                        }
+                    ]
+                };
+
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+                myChart1.setOption(option);
+            }
+    );
+</script>
+
+
+</body>
+</html>

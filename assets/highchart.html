@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<title>Highcharts Example</title>
+		<meta name="Description" content="" />  
+		<meta name="keywords" content="" />
+		<script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="highcharts.js"></script>
+        <script type="text/javascript" src="exporting.js"></script>
+		<script type="text/javascript">
+		    var titleName=window.chart.getTitle();
+	        var unitName=window.chart.getUnit();
+		    var data = new Array();  
+            var contact = window.chart.getSeries(); //得到MainActivity中tag的chart转换出的json字符串  
+            eval('data='+contact); //得到json数据  
+		
+$(function () {
+       window.chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'spline',
+                zoomType: 'x'//拖动可放大X轴
+            },
+            title: {
+                text: titleName,
+                x: -20 //center
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                }
+            },            
+            
+            yAxis: {
+                title: {
+                    text: '单位('+unitName+')'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+               formatter: function() {
+                  return '<strong>'+ this.series.name +'</strong>' +': '+ this.y +unitName+'<br/>'+
+                     Highcharts.dateFormat('%Y年%m月%d日 %H:%M:%S', this.x);
+               }
+            },            
+           
+            plotOptions: {
+                spline: {
+                    lineWidth: 2,
+                    states: {
+                        hover: {
+                            lineWidth: 2
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },           
+            
+            series:data
+            //series: [{name:'温度',data:[[Date.UTC(2014,04,08,16,57,16),26.00],[Date.UTC(2014,04,08,17,02,16),26.00],[Date.UTC(2014,04,08,17,07,16),26.00],[Date.UTC(2014,04,08,17,12,16),26.00],[Date.UTC(2014,04,08,17,17,16),26.00],[Date.UTC(2014,04,08,17,22,16),26.00],[Date.UTC(2014,04,08,17,27,16),26.00],[Date.UTC(2014,04,08,17,32,16),26.00],[Date.UTC(2014,04,08,17,37,16),26.00],[Date.UTC(2014,04,08,17,42,16),26.00],[Date.UTC(2014,04,08,17,47,16),26.00],[Date.UTC(2014,04,08,17,52,16),26.00],[Date.UTC(2014,04,08,17,57,16),26.00],[Date.UTC(2014,04,08,18,02,16),26.00],[Date.UTC(2014,04,08,18,07,16),26.00],[Date.UTC(2014,04,08,18,12,16),26.00],[Date.UTC(2014,04,08,18,17,16),26.00],[Date.UTC(2014,04,08,18,22,16),23.00],[Date.UTC(2014,04,08,18,27,16),23.00],[Date.UTC(2014,04,08,18,32,16),23.00],[Date.UTC(2014,04,08,18,37,16),23.00],[Date.UTC(2014,04,08,18,42,16),23.00],[Date.UTC(2014,04,08,18,47,16),23.00],[Date.UTC(2014,04,08,18,52,16),23.00],[Date.UTC(2014,04,08,18,57,16),23.00],[Date.UTC(2014,04,08,19,02,16),23.00],[Date.UTC(2014,04,08,19,07,16),23.00],[Date.UTC(2014,04,08,19,12,16),23.00],[Date.UTC(2014,04,08,19,17,16),23.00],[Date.UTC(2014,04,08,19,22,16),23.00],[Date.UTC(2014,04,08,19,27,16),23.00],[Date.UTC(2014,04,08,19,32,16),23.00],[Date.UTC(2014,04,08,19,37,16),23.00],[Date.UTC(2014,04,08,19,42,16),23.00],[Date.UTC(2014,04,08,19,47,16),23.00],[Date.UTC(2014,04,08,19,52,16),23.00],[Date.UTC(2014,04,08,19,57,16),23.00],[Date.UTC(2014,04,08,20,02,16),23.00],[Date.UTC(2014,04,08,20,07,16),23.00],[Date.UTC(2014,04,08,20,12,16),23.00],[Date.UTC(2014,04,08,20,17,16),23.00],[Date.UTC(2014,04,08,20,22,16),21.00],[Date.UTC(2014,04,08,20,27,16),21.00],[Date.UTC(2014,04,08,20,32,16),21.00],[Date.UTC(2014,04,08,20,37,16),21.00],[Date.UTC(2014,04,08,20,42,16),21.00],[Date.UTC(2014,04,08,20,47,16),21.00],[Date.UTC(2014,04,08,20,57,16),21.00],[Date.UTC(2014,04,08,21,02,16),21.00],[Date.UTC(2014,04,08,21,07,16),21.00],[Date.UTC(2014,04,08,21,12,16),21.00],[Date.UTC(2014,04,08,21,17,16),21.00],[Date.UTC(2014,04,08,21,22,16),21.00],[Date.UTC(2014,04,08,21,27,16),21.00],[Date.UTC(2014,04,08,21,32,16),21.00],[Date.UTC(2014,04,08,21,37,16),21.00],[Date.UTC(2014,04,08,21,42,16),21.00],[Date.UTC(2014,04,08,21,47,16),21.00],[Date.UTC(2014,04,08,21,52,16),21.00],[Date.UTC(2014,04,08,21,57,16),21.00],[Date.UTC(2014,04,08,22,02,16),21.00],[Date.UTC(2014,04,08,22,07,16),21.00],[Date.UTC(2014,04,08,22,12,16),21.00],[Date.UTC(2014,04,08,22,17,16),21.00]]}]
+        });
+    });
+    
+
+		</script>
+	</head>
+	<body>
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
